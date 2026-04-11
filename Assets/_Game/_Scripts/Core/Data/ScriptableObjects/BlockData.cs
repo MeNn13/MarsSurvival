@@ -6,11 +6,11 @@ namespace _Game._Scripts.Core.Data.ScriptableObjects
     public class BlockData : ItemData
     {
         [SerializeField] private float timeToDestroy;
-        [SerializeField] private int instrumentLevel;
+        [SerializeField] private ModifierData[] modifierToMine;
         [SerializeField] private RuleTile ruleTile;
 
         public float TimeToDestroy => timeToDestroy;
-        public int InstrumentLevel => instrumentLevel;
         public RuleTile Tile => ruleTile;
+        public ModifierData[] ModifierToMine => modifierToMine;
     }
 }
