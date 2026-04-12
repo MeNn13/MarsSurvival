@@ -42,7 +42,7 @@ namespace _Game._Scripts.Core.Input
             MoveInput(input.Move.ReadValue<Vector2>());
             JumpInput(input.Jump.WasPressedThisFrame());
             InteractInput(input.Interact.IsPressed());
-            //LeftClickInput(input.LeftClick.IsPressed());
+            LeftClickInput(input.Attack.IsPressed());
         }
         
         private void JumpInput(bool newValue) => jump = newValue;
