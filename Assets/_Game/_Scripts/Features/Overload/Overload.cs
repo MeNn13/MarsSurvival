@@ -20,8 +20,11 @@ namespace _Game._Scripts.Features.Overload
         
         public void Reduce(float count)
         {
-            if (Mathf.Approximately(Value, 0))
+            if (Value <= 0)
+            {
+                Value = 0;
                 return;
+            }
             
             Value -= count * Time.deltaTime;
         }
