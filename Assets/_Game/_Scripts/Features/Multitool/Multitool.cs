@@ -1,6 +1,5 @@
 ﻿using _Game._Scripts.Core.UI;
 using _Game._Scripts.Features.Overload;
-using UnityEngine;
 
 namespace _Game._Scripts.Features.Multitool
 {

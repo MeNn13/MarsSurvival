@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game._Scripts.Features.Inventory.Item;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,9 +11,8 @@ namespace _Game._Scripts.Features.Inventory
     {
         public event Action<ItemView> OnDropItem;
         public event Action OnEmpty;
+        
         public bool IsEmpty => itemView is null;
-
-        [SerializeField] private ItemView itemView;
         public ItemView ItemView
         {
             get => itemView;
@@ -25,6 +25,7 @@ namespace _Game._Scripts.Features.Inventory
 
         [Header("Attributes")]
         [SerializeField] private bool interactable = true;
+        [SerializeField] private ItemView itemView;
 
         [Header("UI")] 
         [SerializeField] private Image image;
@@ -33,24 +34,26 @@ namespace _Game._Scripts.Features.Inventory
         [SerializeField] private Sprite deselectIcon;
         [SerializeField] private Color deselectColor;
 
-        // private IItemManager _itemManager;
-        //
-        // [Inject]
-        // public void Construct(IItemManager itemManager)
-        // {
-        //     _itemManager = itemManager;
-        // }
+        private IItemManager _itemManager;
+        
+        [Inject]
+        public void Construct(IItemManager itemManager)
+        {
+            _itemManager = itemManager;
+        }
         
         public void Select()
         {
             image.sprite = selectIcon;
             image.color = selectColor;
         }
+        
         public void Deselect()
         {
             image.sprite = deselectIcon;
             image.color = deselectColor;
         }
+        
         public void OnDrop(PointerEventData eventData)
         {
             if (!interactable)
@@ -60,7 +63,7 @@ namespace _Game._Scripts.Features.Inventory
             
             if (droppedItem == itemView) return;
             
-            //_itemManager.DropItemInSlot(droppedItem, this);
+            _itemManager.DropItemInSlot(droppedItem, this);
             
             OnDropItem?.Invoke(droppedItem);
         }

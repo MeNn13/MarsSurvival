@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace _Game._Scripts.Features.Inventory
+namespace _Game._Scripts.Features.Inventory.Item
 {
     [RequireComponent(typeof(Image))]
     public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -15,15 +15,16 @@ namespace _Game._Scripts.Features.Inventory
         [SerializeField] private SlotView parentSlot;
         public SlotView ParentSlot => parentSlot;
         public ItemEntity itemEntity;
+        private Transform DragArea => parentSlot?.transform.parent.transform.parent;
         private Image _image;
 
         private void Awake()
         {
             _image = GetComponent<Image>();
-            Init(itemEntity, parentSlot);
+            Initialize(itemEntity, parentSlot);
         }
 
-        public void Init(ItemEntity item, SlotView slotView)
+        public void Initialize(ItemEntity item, SlotView slotView)
         {
             if (item is null || slotView is null)
                 return;
@@ -37,7 +38,7 @@ namespace _Game._Scripts.Features.Inventory
         public void OnBeginDrag(PointerEventData eventData)
         {
             _image.raycastTarget = false; 
-            transform.SetParent(transform.root);
+            transform.SetParent(DragArea);
         }
         public void OnDrag(PointerEventData eventData)
         {
@@ -53,10 +54,12 @@ namespace _Game._Scripts.Features.Inventory
                 Destroy();
             }
         }
-        public void UpdateParent(Transform parent)
+        public void UpdateParent(SlotView parent)
         {
-            transform.SetParent(parent);
+            transform.SetParent(parent.transform);
+            parentSlot = parent;
             transform.localPosition = Vector3.zero;
+            
         }
         public void RefreshCount()
         {

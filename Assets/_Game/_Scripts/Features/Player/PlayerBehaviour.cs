@@ -1,4 +1,5 @@
-﻿using _Game._Scripts.Core.Input;
+﻿using System;
+using _Game._Scripts.Core.Input;
 using _Game._Scripts.Core.UI;
 using _Game._Scripts.Features.Multitool;
 using _Game._Scripts.Features.Oxygen;
@@ -53,11 +54,14 @@ namespace _Game._Scripts.Features.Player
             _multitool.Update();
             
             SelfZoneHandle();
-
-            MovementHandle();
             
-            if (input.LeftClick)
-                _multitool.Use();
+            // if (input.LeftClick)
+            //     _multitool.Use();
+        }
+
+        private void FixedUpdate()
+        {
+            MovementHandle();
         }
 
         private void MovementHandle()
