@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
-namespace _Game._Scripts.Features.Inventory
+namespace _Game._Scripts.Features.Inventory.Slot
 {
     public class SlotView : MonoBehaviour, IDropHandler
     {
@@ -17,8 +17,10 @@ namespace _Game._Scripts.Features.Inventory
         {
             get => itemView;
             set {
+                var wasEmpty = itemView is null;
                 itemView = value;
-                if (itemView is null) 
+    
+                if (itemView is null && !wasEmpty)
                     OnEmpty?.Invoke();
             }
         }
@@ -34,12 +36,12 @@ namespace _Game._Scripts.Features.Inventory
         [SerializeField] private Sprite deselectIcon;
         [SerializeField] private Color deselectColor;
 
-        private IItemManager _itemManager;
+        private IInventory _inventory;
         
         [Inject]
-        public void Construct(IItemManager itemManager)
+        public void Construct(IInventory  inventory)
         {
-            _itemManager = itemManager;
+            _inventory = inventory;
         }
         
         public void Select()
@@ -63,7 +65,7 @@ namespace _Game._Scripts.Features.Inventory
             
             if (droppedItem == itemView) return;
             
-            _itemManager.DropItemInSlot(droppedItem, this);
+            _inventory.HandleDrop(droppedItem, this);
             
             OnDropItem?.Invoke(droppedItem);
         }

@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 4616976078357088412}
   - component: {fileID: 252524399215767735}
   - component: {fileID: 4521964216757925523}
+  - component: {fileID: 3148625797352425921}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -227,7 +228,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game._Scripts.Features.Inventory.Item.ItemView
   countText: {fileID: 2953438298709236543}
-  parentSlot: {fileID: 0}
-  itemEntity:
-    itemData: {fileID: 0}
-    count: 1
+  image: {fileID: 252524399215767735}
+--- !u!114 &3148625797352425921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2400932657619318002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440d50af377e4446b5dcdcfc570149b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game._Scripts.Features.Inventory.Item.ItemDragHandler

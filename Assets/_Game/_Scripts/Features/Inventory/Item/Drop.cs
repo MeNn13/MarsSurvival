@@ -11,7 +11,7 @@ namespace _Game._Scripts.Features.Inventory.Item
 
         private void Start()
         {
-            spriteRenderer.sprite = item?.itemData?.Icon;
+            spriteRenderer.sprite = item?.ItemData?.Icon;
         }
     }
 }

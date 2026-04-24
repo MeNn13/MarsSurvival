@@ -1,83 +1,45 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using _Game._Scripts.Core.Data.Entities;
+﻿using _Game._Scripts.Core.Data.Entities;
+using _Game._Scripts.Features.Inventory.Slot;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace _Game._Scripts.Features.Inventory.Item
 {
-    [RequireComponent(typeof(Image))]
-    public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    [RequireComponent(typeof(Image), typeof(ItemDragHandler))]
+    public class ItemView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI countText;
-        [SerializeField] private SlotView parentSlot;
-        public SlotView ParentSlot => parentSlot;
-        public ItemEntity itemEntity;
-        private Transform DragArea => parentSlot?.transform.parent.transform.parent;
-        private Image _image;
+        [SerializeField] private Image image;
 
-        private void Awake()
-        {
-            _image = GetComponent<Image>();
-            Initialize(itemEntity, parentSlot);
-        }
+        public SlotView ParentSlot { get; private set; }
+        public ItemEntity ItemEntity { get; private set; }
 
         public void Initialize(ItemEntity item, SlotView slotView)
         {
             if (item is null || slotView is null)
                 return;
 
-            itemEntity = item;
-            parentSlot = slotView;
-            _image.sprite = itemEntity.itemData.Icon;
+            ItemEntity = item;
+            ParentSlot = slotView;
+            image.sprite = item.ItemData.Icon;
             RefreshCount();
         }
-
-        public void OnBeginDrag(PointerEventData eventData)
+        
+        public void AttachTo(SlotView slot)
         {
-            _image.raycastTarget = false; 
-            transform.SetParent(DragArea);
-        }
-        public void OnDrag(PointerEventData eventData)
-        {
-            transform.position = Input.mousePosition;
-        }
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            _image.raycastTarget = true;
-
-            if (DroppedOutsideInventory(eventData))
-            {
-               // ETilemap.CreateDropObjectFromScreen(eventData.position, itemEntity);
-                Destroy();
-            }
-        }
-        public void UpdateParent(SlotView parent)
-        {
-            transform.SetParent(parent.transform);
-            parentSlot = parent;
+            ParentSlot = slot;
+            transform.SetParent(slot.transform);
             transform.localPosition = Vector3.zero;
-            
         }
+        
         public void RefreshCount()
         {
-            countText.text = itemEntity.count.ToString();
-            bool textActive = itemEntity.count > 1;
-            countText.gameObject.SetActive(textActive);
+            countText.text = ItemEntity.Count.ToString();
+            countText.gameObject.SetActive(ItemEntity.Count > 1);
         }
-        public void Destroy()
-        {
+
+        public void Destroy() => 
             Object.Destroy(gameObject);
-        }
-
-        private bool DroppedOutsideInventory(PointerEventData eventData)
-        {
-            var results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventData, results);
-
-            return results.All(result => result.gameObject.GetComponent<SlotView>() is null);
-        }
     }
 }

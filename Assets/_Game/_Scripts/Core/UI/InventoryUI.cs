@@ -1,4 +1,5 @@
 ﻿using _Game._Scripts.Features.Inventory;
+using _Game._Scripts.Features.Inventory.Slot;
 using UnityEngine;
 using Zenject;
 
