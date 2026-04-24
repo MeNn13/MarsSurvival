@@ -15,9 +15,9 @@ MonoBehaviour:
   name: 
   description: 
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: -1736225965, guid: d35143c620db7194499b991001ee7c8e, type: 3}
   color: {r: 0, g: 0, b: 0, a: 0}
   stackable: 0
   timeToDestroy: 0
-  instrumentLevel: 0
+  modifierToMine: []
   ruleTile: {fileID: 0}

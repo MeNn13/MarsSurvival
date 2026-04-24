@@ -1,6 +1,7 @@
-﻿using _Game._Scripts.Core.Input;
+﻿using System;
+using _Game._Scripts.Core.Input;
 using _Game._Scripts.Core.UI;
-using _Game._Scripts.Features.Overload;
+using _Game._Scripts.Features.Multitool;
 using _Game._Scripts.Features.Oxygen;
 using _Game._Scripts.Features.Player.Movement;
 using UnityEngine;
@@ -17,11 +18,6 @@ namespace _Game._Scripts.Features.Player
         [SerializeField] private int oxygenStore = 50;  
         [SerializeField] private int oxygenSupply = 5;  
         [SerializeField] private int oxygenSpend = 5;  
-        
-        //TODO: debug
-        [Header("Overload")]
-        [SerializeField] private float overloadIncrease = 1;  
-        [SerializeField] private float overloadReduce = 1; 
 
         [Header("Unity Settings")] 
         [SerializeField] private Transform groundCheck;
@@ -32,19 +28,18 @@ namespace _Game._Scripts.Features.Player
 
         private IMovement _movement;
         private IOxygen _oxygen;
-        //TODO: debug
-        private IOverload  _overload; 
+        private IMultitool _multitool;
         [SerializeField] private bool _selfZone; //TODO: debug
 
         [Inject]
         public void Construct(
             IMovement movement,
             IOxygen oxygen,
-            IOverload overload)
+            IMultitool multitool)
         {
             _movement = movement;
             _oxygen = oxygen;
-            _overload = overload;
+            _multitool = multitool;
         }
 
         private void Start()
@@ -56,9 +51,16 @@ namespace _Game._Scripts.Features.Player
 
         private void Update()
         {
+            _multitool.Update();
+            
             SelfZoneHandle();
-            OverloadHandle();
+            
+            // if (input.LeftClick)
+            //     _multitool.Use();
+        }
 
+        private void FixedUpdate()
+        {
             MovementHandle();
         }
 
@@ -83,19 +85,6 @@ namespace _Game._Scripts.Features.Player
             
             _oxygen.Spend(oxygenSpend);
             hud.UpdateOxygen(_oxygen.MaxStore, _oxygen.Store);
-        }
-
-        private void OverloadHandle()
-        {
-            if (input.LeftClick)
-            {
-                _overload.Increase(overloadIncrease);
-                hud.UpdateOverload(_overload.MaxValue, _overload.Value);
-                return;
-            }
-            
-            _overload.Reduce(overloadReduce);
-            hud.UpdateOverload(_overload.MaxValue, _overload.Value);
         }
     }
 }
