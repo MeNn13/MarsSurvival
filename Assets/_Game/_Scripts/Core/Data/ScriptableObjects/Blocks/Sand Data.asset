@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3798e623904e8f864d06ff48b0435b, type: 3}
   m_Name: Sand Data
   m_EditorClassIdentifier: Assembly-CSharp::_Game._Scripts.Core.Data.ScriptableObjects.BlockData
-  name: 
+  name: "\u041F\u0435\u0441\u043E\u043A"
   description: 
   prefab: {fileID: 0}
   icon: {fileID: -1736225965, guid: d35143c620db7194499b991001ee7c8e, type: 3}
   color: {r: 0, g: 0, b: 0, a: 0}
-  stackable: 0
+  stackable: 1
   timeToDestroy: 0
   modifierToMine: []
   ruleTile: {fileID: 0}

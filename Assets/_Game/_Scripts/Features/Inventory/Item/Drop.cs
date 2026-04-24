@@ -9,9 +9,6 @@ namespace _Game._Scripts.Features.Inventory.Item
         
         public ItemEntity item;
 
-        private void Start()
-        {
-            spriteRenderer.sprite = item?.ItemData?.Icon;
-        }
+        private void Start() => spriteRenderer.sprite = item?.ItemData?.Icon;
     }
 }

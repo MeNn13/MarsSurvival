@@ -101,8 +101,8 @@ namespace _Game._Scripts.Features.Inventory
 
             return true;
         }
-        
-        private bool IsValidDrop(ItemView item, SlotView slot) => 
+
+        private bool IsValidDrop(ItemView item, SlotView slot) =>
             item is not null && slot is not null && item.ParentSlot is not null;
         private void PlaceBack(ItemView item)
         {
@@ -116,7 +116,7 @@ namespace _Game._Scripts.Features.Inventory
 
             if (!TryStackInto(targetSlot.ItemView, droppedItem.ItemEntity))
                 return false;
-            
+
             droppedItem.Destroy();
             return true;
         }
@@ -133,26 +133,26 @@ namespace _Game._Scripts.Features.Inventory
         }
 
         private void UseItemInSlot(SlotView slot)
-                {
-                    var entity = slot.ItemView.ItemEntity;
-                    entity.Remove(1);
-        
-                    if (entity.IsEmpty)
-                    {
-                        slot.ItemView.Destroy();
-                        slot.ItemView = null;
-        
-                        return;
-                    }
-        
-                    slot.ItemView.RefreshCount();
-                }
+        {
+            var entity = slot.ItemView.ItemEntity;
+            entity.Remove(1);
+
+            if (entity.IsEmpty)
+            {
+                slot.ItemView.Destroy();
+                slot.ItemView = null;
+
+                return;
+            }
+
+            slot.ItemView.RefreshCount();
+        }
         private bool CanStack(ItemEntity target, ItemEntity incoming)
-                {
-                    return target.ItemData == incoming.ItemData
-                           && incoming.ItemData.Stackable
-                           && target.Count + incoming.Count <= InventoryConstants.MAX_STACK;
-                }
+        {
+            return target.ItemData == incoming.ItemData
+                   && incoming.ItemData.Stackable
+                   && target.Count + incoming.Count <= InventoryConstants.MAX_STACK;
+        }
         private SlotView FindEmptySlot() =>
             _slots.FirstOrDefault(s => s.IsEmpty);
     }
