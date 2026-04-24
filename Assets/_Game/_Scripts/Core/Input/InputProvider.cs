@@ -12,14 +12,24 @@ namespace _Game._Scripts.Core.Input
         [SerializeField] private bool sprint;
         [SerializeField] private bool interact;
         [SerializeField] private Vector2 look;
-        [SerializeField] private bool inventory;
+        [SerializeField] private bool backpack;
 
         private Input_Actions _input;
+        private readonly HotbarInputHandler _hotbarHandler = new();
 
-        public Vector2 GetMove => move;
+        public Vector2 Move => move;
         public bool LeftClick => leftClick;
         public bool Jump => jump;
         public bool Interact => interact;
+        public int SelectedSlotIndex
+        {
+            get
+            {
+                _hotbarHandler.Clamp(5);
+                return _hotbarHandler.SelectedIndex;
+            }
+        }
+        public bool Backpack => backpack;
 
         private void OnEnable()
         {
@@ -33,21 +43,28 @@ namespace _Game._Scripts.Core.Input
             _input = null;
         }
 
-        private void Update() => UpdateInputState();
-
-        private void UpdateInputState()
+        private void Update()
         {
-            var input = _input.Player;
-            
-            MoveInput(input.Move.ReadValue<Vector2>());
-            JumpInput(input.Jump.WasPressedThisFrame());
-            InteractInput(input.Interact.IsPressed());
-            LeftClickInput(input.Attack.IsPressed());
+            ReadMovement();
+            ReadActions();
+            _hotbarHandler.Process(_input.Player.Scroll, _input.Player.HotbarSlot);
         }
         
-        private void JumpInput(bool newValue) => jump = newValue;
-        private void MoveInput(Vector2 newDirection) => move = newDirection;
-        private void InteractInput(bool newValue) => interact = newValue;
-        private void LeftClickInput(bool newValue) => leftClick = newValue;
+        private void ReadMovement()
+        {
+            var input = _input.Player;
+            move = input.Move.ReadValue<Vector2>();
+            look = input.Look.ReadValue<Vector2>();
+        }
+
+        private void ReadActions()
+        {
+            var input = _input.Player;
+            jump = input.Jump.WasPressedThisFrame();
+            interact = input.Interact.IsPressed();
+            leftClick = input.Attack.IsPressed();
+            sprint = input.Sprint.IsPressed();
+            backpack = input.Backpack.WasPressedThisFrame();
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using _Game._Scripts.Core.Input;
+﻿using _Game._Scripts.Core.Input;
 using _Game._Scripts.Core.UI;
 using _Game._Scripts.Features.Multitool;
 using _Game._Scripts.Features.Oxygen;
@@ -66,8 +65,8 @@ namespace _Game._Scripts.Features.Player
 
         private void MovementHandle()
         {
-            if (input.GetMove.magnitude >= .1f)
-                _movement.Move(speed, input.GetMove.x);
+            if (input.Move.magnitude >= .1f)
+                _movement.Move(speed, input.Move.x);
 
             if (input.Jump)
                 _movement.Jump(jumpForce);

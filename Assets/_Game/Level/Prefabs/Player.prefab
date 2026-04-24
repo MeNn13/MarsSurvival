@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 9144344028706269430}
   - component: {fileID: 1890004590345232431}
   - component: {fileID: 1576114885828458920}
+  - component: {fileID: 91963090564944385}
   - component: {fileID: 5268470720569437663}
   - component: {fileID: 3411366409750062427}
   m_Layer: 0
@@ -365,6 +366,19 @@ MonoBehaviour:
   interact: 0
   look: {x: 0, y: 0}
   inventory: 0
+--- !u!114 &91963090564944385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4234065175685624765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86dcf62bea74c74ad30a540c24ce4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game._Scripts.Features.Inventory.InventoryInputController
+  input: {fileID: 1576114885828458920}
 --- !u!50 &5268470720569437663
 Rigidbody2D:
   serializedVersion: 5
